@@ -27,7 +27,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Здесь можно зарабатывать с пользой для здоровья 🌿\n\n"
         "Таңдаңыз / Выберите:"
     )
-    await update.message.reply_text(text, reply_markup=reply_markup)
+
+    # если пришла команда /start
+    if update.message:
+        await update.message.reply_text(text, reply_markup=reply_markup)
+    # если вызов из кнопки (callback)
+    elif update.callback_query:
+        await update.callback_query.edit_message_text(text, reply_markup=reply_markup)
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query

@@ -28,11 +28,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Таңдаңыз / Выберите:"
     )
 
-    # если пришла команда /start
-    if update.message:
+    if update.message:  # если команда /start
         await update.message.reply_text(text, reply_markup=reply_markup)
-    # если вызов из кнопки (callback)
-    elif update.callback_query:
+    elif update.callback_query:  # если кнопка "Назад"
         await update.callback_query.edit_message_text(text, reply_markup=reply_markup)
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -61,6 +59,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
 
     elif data == "back":
+        # Возврат в главное меню
         await start(update, context)
 
 def main():

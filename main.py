@@ -1,4 +1,5 @@
 import os
+import time
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 
@@ -28,9 +29,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Таңдаңыз / Выберите:"
     )
 
-    if update.message:  # если команда /start
+    if update.message:
         await update.message.reply_text(text, reply_markup=reply_markup)
-    elif update.callback_query:  # если кнопка "Назад"
+    elif update.callback_query:
         await update.callback_query.edit_message_text(text, reply_markup=reply_markup)
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -59,7 +60,6 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
 
     elif data == "back":
-        # Возврат в главное меню
         await start(update, context)
 
 def main():
@@ -68,6 +68,10 @@ def main():
     app.add_handler(CallbackQueryHandler(button))
     print("🤖 ForeverErnarBot is running...")
     app.run_polling()
+
+    # ⬇️ Добавляем этот блок сразу после запуска
+    while True:
+        time.sleep(3600)
 
 if __name__ == '__main__':
     main()
